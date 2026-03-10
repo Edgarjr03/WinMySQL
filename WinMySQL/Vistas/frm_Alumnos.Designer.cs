@@ -30,12 +30,15 @@
         {
             components = new System.ComponentModel.Container();
             splitContainer1 = new SplitContainer();
+            btn_Actualizar = new Button();
+            btn_Importar = new Button();
             btn_Agregar = new Button();
             label1 = new Label();
             txt_Buscar = new TextBox();
             dgv_Alumnos = new DataGridView();
             cms_Data = new ContextMenuStrip(components);
             eliminarToolStripMenuItem = new ToolStripMenuItem();
+            ofd_Excel = new OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -53,6 +56,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            splitContainer1.Panel1.Controls.Add(btn_Actualizar);
+            splitContainer1.Panel1.Controls.Add(btn_Importar);
             splitContainer1.Panel1.Controls.Add(btn_Agregar);
             splitContainer1.Panel1.Controls.Add(label1);
             splitContainer1.Panel1.Controls.Add(txt_Buscar);
@@ -65,9 +70,29 @@
             splitContainer1.TabIndex = 0;
             splitContainer1.SplitterMoved += splitContainer1_SplitterMoved;
             // 
+            // btn_Actualizar
+            // 
+            btn_Actualizar.Location = new Point(248, 82);
+            btn_Actualizar.Name = "btn_Actualizar";
+            btn_Actualizar.Size = new Size(112, 34);
+            btn_Actualizar.TabIndex = 4;
+            btn_Actualizar.Text = "Actualizar";
+            btn_Actualizar.UseVisualStyleBackColor = true;
+            btn_Actualizar.Click += btn_Actualizar_Click;
+            // 
+            // btn_Importar
+            // 
+            btn_Importar.Location = new Point(130, 82);
+            btn_Importar.Name = "btn_Importar";
+            btn_Importar.Size = new Size(112, 34);
+            btn_Importar.TabIndex = 3;
+            btn_Importar.Text = "Importar";
+            btn_Importar.UseVisualStyleBackColor = true;
+            btn_Importar.Click += button1_Click;
+            // 
             // btn_Agregar
             // 
-            btn_Agregar.Location = new Point(676, 42);
+            btn_Agregar.Location = new Point(12, 82);
             btn_Agregar.Name = "btn_Agregar";
             btn_Agregar.Size = new Size(112, 34);
             btn_Agregar.TabIndex = 2;
@@ -88,7 +113,7 @@
             // 
             txt_Buscar.Location = new Point(12, 45);
             txt_Buscar.Name = "txt_Buscar";
-            txt_Buscar.Size = new Size(640, 31);
+            txt_Buscar.Size = new Size(776, 31);
             txt_Buscar.TabIndex = 0;
             // 
             // dgv_Alumnos
@@ -116,6 +141,10 @@
             eliminarToolStripMenuItem.Size = new Size(146, 32);
             eliminarToolStripMenuItem.Text = "Eliminar";
             eliminarToolStripMenuItem.Click += eliminarToolStripMenuItem_Click;
+            // 
+            // ofd_Excel
+            // 
+            ofd_Excel.FileName = "ofd_Excel";
             // 
             // frm_Alumnos
             // 
@@ -145,5 +174,8 @@
         private DataGridView dgv_Alumnos;
         private ContextMenuStrip cms_Data;
         private ToolStripMenuItem eliminarToolStripMenuItem;
+        private Button btn_Importar;
+        private OpenFileDialog ofd_Excel;
+        private Button btn_Actualizar;
     }
 }

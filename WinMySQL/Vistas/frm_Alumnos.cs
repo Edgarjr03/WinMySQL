@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using OfficeOpenXml;
 
 namespace WinMySQL.Vistas
 {
@@ -13,20 +14,14 @@ namespace WinMySQL.Vistas
     {
         Datos datos = new Datos();
         DataSet ds = new DataSet();
-        private int v1;
-        private string? v2;
-        private string? v3;
-        private string? v4;
-        private int v5;
-        private string? v6;
-        private int v7;
+
 
         public frm_Alumnos()
         {
             InitializeComponent();
         }
 
-       
+
 
         private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
         {
@@ -51,7 +46,7 @@ namespace WinMySQL.Vistas
         {
             frm_Alumno alumno = new frm_Alumno();
             alumno.ShowDialog();
-            CargarAlumnos();  
+            CargarAlumnos();
         }
 
         private void frm_Alumnos_Activated(object sender, EventArgs e)
@@ -109,6 +104,48 @@ namespace WinMySQL.Vistas
                     }
                 }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string path;
+            DialogResult dr = ofd_Excel.ShowDialog();
+            {
+                if (dr == DialogResult.OK)
+                {
+                    path = ofd_Excel.FileName;
+                    ExcelPackage.License.SetNonCommercialPersonal("Edgar");
+                    using (var package = new ExcelPackage(new FileInfo(path)))
+                    {
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                        int rowCount = worksheet.Dimension.Rows;
+                        int colCount = worksheet.Dimension.Columns;
+                        DataTable dt = new DataTable();
+                        for (int col = 1; col <= colCount; col++)
+                        {
+                            dt.Columns.Add(worksheet.Cells[1, col].Value.ToString());
+                        }
+                        for (int row = 2; row <= rowCount; row++)
+                        {
+                            DataRow drNew = dt.NewRow();
+                            for (int col = 1; col <= colCount; col++)
+                            {
+                                drNew[col - 1] = worksheet.Cells[row, col].Value.ToString();
+                            }
+                            dt.Rows.Add(drNew);
+                            string comando = $"INSERT INTO Alumnos (Nombre, ApellidoP, ApellidoM, NumControl, Carrera, Semestre) " +
+                                          $"VALUES ('{drNew.ItemArray[0]}','{drNew.ItemArray[1]}','{drNew.ItemArray[2]}','{drNew.ItemArray[3]}','{drNew.ItemArray[4]}','{drNew.ItemArray[5]}')";
+                            datos.ejecutarComando(comando);
+                        }
+                        dgv_Alumnos.DataSource = dt;
+                    }
+                }
+            }
+        }
+
+        private void btn_Actualizar_Click(object sender, EventArgs e)
+        {
+            CargarAlumnos();
         }
     }
 }
